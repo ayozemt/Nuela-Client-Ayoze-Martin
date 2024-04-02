@@ -38,6 +38,10 @@ function EditSubjectForm() {
     }));
   };
 
+  const buildEspacio = () => {
+    return `${subject.grade} - Grupo ${subject.group}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!subjectId) {
@@ -45,7 +49,8 @@ function EditSubjectForm() {
       return;
     }
     try {
-      await updateSubject(subjectId, subject);
+      const updatedSubject = { ...subject, espacio: buildEspacio() };
+      await updateSubject(subjectId, updatedSubject);
       alert("Asignatura actualizada correctamente");
     } catch (error) {
       alert("Se produjo un error al actualizar la asignatura");
@@ -100,15 +105,6 @@ function EditSubjectForm() {
           value={subject.hours}
           onChange={handleChange}
           required
-        />
-      </label>
-      <label>
-        Espacio:
-        <input
-          type="text"
-          name="espacio"
-          value={subject.espacio}
-          onChange={handleChange}
         />
       </label>
       <button type="submit" className="btn btn-primary">
