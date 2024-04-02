@@ -1,5 +1,11 @@
-.card {
+.cardo {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #f0f0f0;
 }
