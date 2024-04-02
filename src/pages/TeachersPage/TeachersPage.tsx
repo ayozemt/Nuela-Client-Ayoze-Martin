@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import TeacherCard from "../../components/TeacherCard/TeacherCard";
 import Teacher from "../../interfaces/Teacher";
 import Subject from "../../interfaces/Subject";
+import HoursCalculator from "../../components/HoursCalculator/HoursCalculator";
 import { getTeachers } from "../../services/TeacherService";
 import { getSubjectsByTeacher } from "../../services/SubjectService";
 
@@ -42,6 +44,9 @@ function TeachersPage() {
       <h1>Profesores</h1>
       <h2>Crea y gestiona profesores</h2>
 
+      <Link to="/create-teacher" className="btn btn-primary mb-3">
+        + Añadir Profesor
+      </Link>
       {teachers.map((teacher) => (
         <div key={teacher._id}>
           <TeacherCard
@@ -53,41 +58,51 @@ function TeachersPage() {
       ))}
 
       {selectedTeacherId &&
-        (subjects[selectedTeacherId] &&
-        subjects[selectedTeacherId].length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Curso</th>
-                <th>Grupo</th>
-                <th>Horas</th>
-                <th>Espacio</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {subjects[selectedTeacherId].map((subject: Subject) => (
-                <tr key={subject._id}>
-                  <td>{subject.name}</td>
-                  <td>{subject.type}</td>
-                  <td>{subject.grade}</td>
-                  <td>{subject.group}</td>
-                  <td>{subject.hours}</td>
-                  <td>{subject.espacio}</td>
-                  <td>
-                    <button>Ver</button>
-                    <button>Editar</button>
-                    <button>Eliminar</button>
-                  </td>
+        subjects[selectedTeacherId] &&
+        subjects[selectedTeacherId].length > 0 && <HoursCalculator />}
+
+      {selectedTeacherId && (
+        <div>
+          <button className="btn btn-primary mt-3 mb-3">
+            + Añadir Asignatura
+          </button>
+          {subjects[selectedTeacherId] &&
+          subjects[selectedTeacherId].length > 0 ? (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Tipo</th>
+                  <th>Curso</th>
+                  <th>Grupo</th>
+                  <th>Horas</th>
+                  <th>Espacio</th>
+                  <th>Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No hay asignaturas asignadas a este profesor</p>
-        ))}
+              </thead>
+              <tbody>
+                {subjects[selectedTeacherId].map((subject: Subject) => (
+                  <tr key={subject._id}>
+                    <td>{subject.name}</td>
+                    <td>{subject.type}</td>
+                    <td>{subject.grade}</td>
+                    <td>{subject.group}</td>
+                    <td>{subject.hours}</td>
+                    <td>{subject.espacio}</td>
+                    <td>
+                      <button>Ver</button>
+                      <button>Editar</button>
+                      <button>Eliminar</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No hay asignaturas asignadas a este profesor</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
