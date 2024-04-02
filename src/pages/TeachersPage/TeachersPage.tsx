@@ -63,9 +63,12 @@ function TeachersPage() {
 
       {selectedTeacherId && (
         <div>
-          <button className="btn btn-primary mt-3 mb-3">
+          <Link
+            to={`/teacher/${selectedTeacherId}/add-subject`}
+            className="btn btn-primary mt-3 mb-3"
+          >
             + Añadir Asignatura
-          </button>
+          </Link>
           {subjects[selectedTeacherId] &&
           subjects[selectedTeacherId].length > 0 ? (
             <table className="table">
