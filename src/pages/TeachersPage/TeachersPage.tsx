@@ -5,7 +5,10 @@ import Teacher from "../../interfaces/Teacher";
 import Subject from "../../interfaces/Subject";
 import HoursCalculator from "../../components/HoursCalculator/HoursCalculator";
 import { getTeachers } from "../../services/TeacherService";
-import { getSubjectsByTeacher } from "../../services/SubjectService";
+import {
+  getSubjectsByTeacher,
+  deleteSubject,
+} from "../../services/SubjectService";
 
 function TeachersPage() {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
@@ -13,6 +16,7 @@ function TeachersPage() {
   const [selectedTeacherId, setSelectedTeacherId] = useState<string | null>(
     null
   );
+  const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
 
   useEffect(() => {
     fetchTeachers();
@@ -36,6 +40,32 @@ function TeachersPage() {
       }
     } catch (error) {
       console.error("Error fetching subjects:", error);
+    }
+  };
+
+  const handleDelete = (subject: Subject) => {
+    setSubjectToDelete(subject);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      if (subjectToDelete) {
+        await deleteSubject(subjectToDelete._id);
+        setSubjects((prevSubjects) => {
+          const updatedSubjects = { ...prevSubjects };
+          Object.keys(updatedSubjects).forEach((teacherId) => {
+            updatedSubjects[teacherId] = updatedSubjects[teacherId].filter(
+              (subject) => subject._id !== subjectToDelete._id
+            );
+          });
+          return updatedSubjects;
+        });
+        setSubjectToDelete(null);
+        alert("Asignatura eliminada correctamente");
+      }
+    } catch (error) {
+      console.error("Error deleting subject:", error);
+      alert("Se produjo un error al eliminar la asignatura");
     }
   };
 
@@ -94,8 +124,12 @@ function TeachersPage() {
                     <td>{subject.espacio}</td>
                     <td>
                       <button>Ver</button>
-                      <Link to={`/editar-asignatura/${subject._id}`}>Editar</Link>
-                      <button>Eliminar</button>
+                      <Link to={`/editar-asignatura/${subject._id}`}>
+                        Editar
+                      </Link>
+                      <button onClick={() => handleDelete(subject)}>
+                        Eliminar
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -104,6 +138,17 @@ function TeachersPage() {
           ) : (
             <p>No hay asignaturas asignadas a este profesor</p>
           )}
+        </div>
+      )}
+
+      {subjectToDelete && (
+        <div className="delete-confirmation">
+          <p>
+            ¿Estás seguro de que deseas eliminar la asignatura{" "}
+            {subjectToDelete.name}?
+          </p>
+          <button onClick={confirmDelete}>Eliminar</button>
+          <button onClick={() => setSubjectToDelete(null)}>Cancelar</button>
         </div>
       )}
     </div>
