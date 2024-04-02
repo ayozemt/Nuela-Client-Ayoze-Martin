@@ -27,14 +27,10 @@ function TeachersPage() {
 
   const handleTeacherClick = async (teacherId: string) => {
     try {
-      if (selectedTeacherId === teacherId) {
-        setSelectedTeacherId(null);
-      } else {
-        setSelectedTeacherId(teacherId);
-        if (!subjects[teacherId]) {
-          const fetchedSubjects = await getSubjectsByTeacher(teacherId);
-          setSubjects({ ...subjects, [teacherId]: fetchedSubjects });
-        }
+      setSelectedTeacherId(selectedTeacherId === teacherId ? null : teacherId);
+      if (!subjects[teacherId]) {
+        const fetchedSubjects = await getSubjectsByTeacher(teacherId);
+        setSubjects({ ...subjects, [teacherId]: fetchedSubjects });
       }
     } catch (error) {
       console.error("Error fetching subjects:", error);
