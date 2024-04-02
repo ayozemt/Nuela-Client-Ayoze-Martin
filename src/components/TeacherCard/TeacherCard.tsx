@@ -18,7 +18,7 @@ function TeacherCard({ teacher, onClick, isSelected }: Props) {
         <p>{teacher.telephone}</p>
       </div>
       <div>
-        <a href={`/editar/${teacher._id}`}>Editar</a>
+        <a href={`/editar-profesor/${teacher._id}`}>Editar</a>
       </div>
     </div>
   );

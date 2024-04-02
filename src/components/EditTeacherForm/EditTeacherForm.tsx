@@ -91,7 +91,12 @@ function EditTeacherForm() {
           required
         />
       </label>
-      <button type="submit">Actualizar Profesor</button>
+      <button type="submit" className="btn btn-primary">
+        Actualizar Profesor
+      </button>
+      <a className="btn btn-danger" href="/" role="button">
+        Cancelar
+      </a>
     </form>
   );
 }

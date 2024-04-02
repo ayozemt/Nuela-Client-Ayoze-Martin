@@ -16,7 +16,7 @@ function TeachersPage() {
 
   useEffect(() => {
     fetchTeachers();
-  }, [teachers]);
+  }, []);
 
   const fetchTeachers = async () => {
     try {
@@ -94,7 +94,7 @@ function TeachersPage() {
                     <td>{subject.espacio}</td>
                     <td>
                       <button>Ver</button>
-                      <button>Editar</button>
+                      <Link to={`/editar-asignatura/${subject._id}`}>Editar</Link>
                       <button>Eliminar</button>
                     </td>
                   </tr>
