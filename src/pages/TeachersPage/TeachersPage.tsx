@@ -16,7 +16,7 @@ function TeachersPage() {
 
   useEffect(() => {
     fetchTeachers();
-  }, []);
+  }, [teachers]);
 
   const fetchTeachers = async () => {
     try {
