@@ -17,10 +17,22 @@ function TeachersPage() {
     null
   );
   const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
+  const [teachingHours, setTeachingHours] = useState<number>(0);
 
   useEffect(() => {
     fetchTeachers();
   }, []);
+
+  useEffect(() => {
+    if (selectedTeacherId && subjects[selectedTeacherId]) {
+      // Calcula las horas totales cuando cambia el profesor seleccionado o las asignaturas del profesor seleccionado
+      let total = 0;
+      subjects[selectedTeacherId].forEach((subject) => {
+        total += subject.hours;
+      });
+      setTeachingHours(total);
+    }
+  }, [selectedTeacherId, subjects]);
 
   const fetchTeachers = async () => {
     try {
@@ -89,7 +101,9 @@ function TeachersPage() {
 
       {selectedTeacherId &&
         subjects[selectedTeacherId] &&
-        subjects[selectedTeacherId].length > 0 && <HoursCalculator />}
+        subjects[selectedTeacherId].length > 0 && (
+          <HoursCalculator teachingHours={teachingHours} />
+        )}
 
       {selectedTeacherId && (
         <div>
