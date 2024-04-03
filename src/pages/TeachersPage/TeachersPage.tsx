@@ -10,6 +10,7 @@ import {
   deleteSubject,
 } from "../../services/SubjectService";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
+import AddTeacherForm from "../../components/AddTeacherForm/AddTeacherForm";
 
 function TeachersPage() {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
@@ -90,9 +91,14 @@ function TeachersPage() {
       <h1>Profesores</h1>
       <h2>Crea y gestiona profesores</h2>
 
-      <Link to="/create-teacher" className="btn btn-primary mb-3">
+      <Link
+        to="#"
+        className="btn btn-primary mt-3 mb-3"
+        onClick={handleShowModal}
+      >
         + Añadir Profesor
       </Link>
+      <AddTeacherForm show={showModal} onHide={handleCloseModal} />
       {teachers.map((teacher) => (
         <div key={teacher._id}>
           <TeacherCard
