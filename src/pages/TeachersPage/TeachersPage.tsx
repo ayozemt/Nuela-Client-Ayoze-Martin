@@ -9,6 +9,7 @@ import {
   getSubjectsByTeacher,
   deleteSubject,
 } from "../../services/SubjectService";
+import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 
 function TeachersPage() {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
@@ -18,6 +19,9 @@ function TeachersPage() {
   );
   const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
   const [teachingHours, setTeachingHours] = useState<number>(0);
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   useEffect(() => {
     fetchTeachers();
@@ -108,11 +112,17 @@ function TeachersPage() {
       {selectedTeacherId && (
         <div>
           <Link
-            to={`/teacher/${selectedTeacherId}/add-subject`}
+            to="#"
             className="btn btn-primary mt-3 mb-3"
+            onClick={handleShowModal}
           >
             + Añadir Asignatura
           </Link>
+          <AddSubjectForm
+            show={showModal}
+            onHide={handleCloseModal}
+            teacherId={selectedTeacherId || ""}
+          />
           {subjects[selectedTeacherId] &&
           subjects[selectedTeacherId].length > 0 ? (
             <table className="table">
