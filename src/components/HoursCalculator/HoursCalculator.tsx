@@ -7,11 +7,11 @@ function HoursCalculator({ teachingHours }: { teachingHours: number }) {
 
   useEffect(() => {
     if (activeTab === "weekly") {
-      setTotalHours(teachingHours + teachingHours * 0.2);
-      setExtraHours(teachingHours * 0.2);
+      setTotalHours(teachingHours + Math.ceil(teachingHours * 0.2));
+      setExtraHours(Math.ceil(teachingHours * 0.2));
     } else {
-      setTotalHours((teachingHours + teachingHours * 0.2) * 37);
-      setExtraHours(teachingHours * 0.2 * 37);
+      setTotalHours((teachingHours + Math.ceil(teachingHours * 0.2)) * 37);
+      setExtraHours(Math.ceil(teachingHours * 0.2) * 37);
     }
   }, [teachingHours, activeTab]);
 
