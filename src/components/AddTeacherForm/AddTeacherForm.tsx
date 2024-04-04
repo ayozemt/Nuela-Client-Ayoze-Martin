@@ -26,9 +26,23 @@ function AddTeacherForm({ show, onHide, fetchTeachers }: AddTeacherFormProps) {
     }));
   };
 
+  const generatePlaceholderImage = (name: string) => {
+    return `https://via.placeholder.com/150x150/e7e6fe/5c37eb?text=${name
+      .split(" ")
+      .map((namePart) => namePart.charAt(0))
+      .join("")}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      if (!teacherData.photo) {
+        setTeacherData((prevData) => ({
+          ...prevData,
+          photo: generatePlaceholderImage(prevData.name),
+        }));
+      }
+
       await createTeacher(teacherData);
 
       setTeacherData({
@@ -103,7 +117,6 @@ function AddTeacherForm({ show, onHide, fetchTeachers }: AddTeacherFormProps) {
               value={teacherData.photo}
               onChange={handleChange}
               className="form-control"
-              required
             />
           </div>
           <div className="d-flex justify-content-end m-4">
