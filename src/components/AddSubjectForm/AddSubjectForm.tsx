@@ -64,8 +64,7 @@ function AddSubjectForm({ show, onHide, teacherId }: AddSubjectFormProps) {
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit} className="mt-4 mb-4">
-          {/* <h2 className="mb-5">Añadir asignatura</h2> */}
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="name" className="form-label">
               Selecciona la asignatura:
             </label>
@@ -76,6 +75,7 @@ function AddSubjectForm({ show, onHide, teacherId }: AddSubjectFormProps) {
               className="form-select"
               required
             >
+              <option value="">Selecciona la asignatura</option>
               <option value="Matemáticas">Matemáticas</option>
               <option value="Lengua">Lengua</option>
               <option value="Inglés">Inglés</option>
@@ -85,7 +85,7 @@ function AddSubjectForm({ show, onHide, teacherId }: AddSubjectFormProps) {
               <option value="Gimnasia">Gimnasia</option>
             </select>
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="type" className="form-label">
               Tipo de asignatura:
             </label>
@@ -100,7 +100,7 @@ function AddSubjectForm({ show, onHide, teacherId }: AddSubjectFormProps) {
               <option value="Optativa">Optativa</option>
             </select>
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="grade" className="form-label">
               Curso:
             </label>
@@ -119,7 +119,7 @@ function AddSubjectForm({ show, onHide, teacherId }: AddSubjectFormProps) {
               <option value="2 de Bachillerato">2 de Bachillerato</option>
             </select>
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="group" className="form-label">
               Grupo:
             </label>
@@ -136,22 +136,25 @@ function AddSubjectForm({ show, onHide, teacherId }: AddSubjectFormProps) {
               <option value="D">D</option>
             </select>
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="hours" className="form-label">
               Horas:
             </label>
             <input
               type="number"
               name="hours"
+              min="1"
               value={subjectData.hours}
               onChange={handleChange}
               className="form-control"
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary mt-2">
-            Añadir Asignatura
-          </button>
+          <div className="d-flex justify-content-end m-4">
+            <button type="submit" className="btn btn-primary mt-2">
+              Añadir Asignatura
+            </button>
+          </div>
         </form>
       </Modal.Body>
     </Modal>

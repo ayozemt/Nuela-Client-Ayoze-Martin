@@ -73,7 +73,7 @@ function EditSubjectForm({ show, onHide, subjectId }: EditSubjectFormProps) {
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit} className="mt-4 mb-4">
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="name" className="form-label">
               Nombre:
             </label>
@@ -86,7 +86,7 @@ function EditSubjectForm({ show, onHide, subjectId }: EditSubjectFormProps) {
               required
             />
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="type" className="form-label">
               Tipo:
             </label>
@@ -101,7 +101,7 @@ function EditSubjectForm({ show, onHide, subjectId }: EditSubjectFormProps) {
               <option value="Optativa">Optativa</option>
             </select>
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="grade" className="form-label">
               Curso:
             </label>
@@ -120,7 +120,7 @@ function EditSubjectForm({ show, onHide, subjectId }: EditSubjectFormProps) {
               <option value="2 de Bachillerato">2 de Bachillerato</option>
             </select>
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="group" className="form-label">
               Grupo:
             </label>
@@ -137,22 +137,25 @@ function EditSubjectForm({ show, onHide, subjectId }: EditSubjectFormProps) {
               <option value="D">D</option>
             </select>
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="hours" className="form-label">
               Horas:
             </label>
             <input
               type="number"
               name="hours"
+              min="1"
               value={subject.hours}
               onChange={handleChange}
               className="form-control"
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary mt-2">
-            Actualizar Asignatura
-          </button>
+          <div className="d-flex justify-content-end m-4">
+            <button type="submit" className="btn btn-primary mt-2">
+              Actualizar Asignatura
+            </button>
+          </div>
         </form>
       </Modal.Body>
     </Modal>

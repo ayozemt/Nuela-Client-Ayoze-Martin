@@ -64,7 +64,7 @@ function EditTeacherForm({ show, onHide, teacherId }: EditTeacherFormProps) {
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit} className="mt-4 mb-4">
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="name" className="form-label">
               Nombre:
             </label>
@@ -77,7 +77,7 @@ function EditTeacherForm({ show, onHide, teacherId }: EditTeacherFormProps) {
               required
             />
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="email" className="form-label">
               Email:
             </label>
@@ -90,7 +90,7 @@ function EditTeacherForm({ show, onHide, teacherId }: EditTeacherFormProps) {
               required
             />
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="telephone" className="form-label">
               Teléfono:
             </label>
@@ -103,7 +103,7 @@ function EditTeacherForm({ show, onHide, teacherId }: EditTeacherFormProps) {
               required
             />
           </div>
-          <div className="mb-3 px-5">
+          <div className="mb-3 px-4">
             <label htmlFor="photo" className="form-label">
               Foto URL:
             </label>
@@ -116,9 +116,11 @@ function EditTeacherForm({ show, onHide, teacherId }: EditTeacherFormProps) {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary mt-2">
-            Actualizar Profesor
-          </button>
+          <div className="d-flex justify-content-end m-4">
+            <button type="submit" className="btn btn-primary mt-2">
+              Actualizar Profesor
+            </button>
+          </div>
         </form>
       </Modal.Body>
     </Modal>
