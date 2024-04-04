@@ -114,14 +114,15 @@ function TeachersPage() {
     <div>
       <h1>Profesores</h1>
       <h2>Crea y gestiona profesores</h2>
-
-      <button
-        className="btn btn-primary mt-3 mb-3"
-        onClick={handleShowModal}
-        disabled={selectedTeacherId !== null}
-      >
-        + Añadir Profesor
-      </button>
+      <div className="d-flex justify-content-end m-4">
+        <button
+          className="btn btn-primary mt-3 mb-3"
+          onClick={handleShowModal}
+          disabled={selectedTeacherId !== null}
+        >
+          + Añadir Profesor
+        </button>
+      </div>
       <AddTeacherForm show={showModal} onHide={handleCloseModal} />
       {teachers.map((teacher) => (
         <div key={teacher._id}>
@@ -141,12 +142,14 @@ function TeachersPage() {
 
       {selectedTeacherId && (
         <div>
-          <button
-            className="btn btn-primary mt-3 mb-3"
-            onClick={handleShowModal}
-          >
-            + Añadir Asignatura
-          </button>
+          <div className="d-flex justify-content-end m-4">
+            <button
+              className="btn btn-primary mt-3 mb-3"
+              onClick={handleShowModal}
+            >
+              + Añadir Asignatura
+            </button>
+          </div>
           <AddSubjectForm
             show={showModal}
             onHide={handleCloseModal}
