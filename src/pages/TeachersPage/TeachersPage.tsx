@@ -123,12 +123,12 @@ function TeachersPage() {
   };
 
   return (
-    <div>
-      <div className="mx-5 mt-4">
+    <div className="bg-light">
+      <div className="mx-5 pt-4">
         <h2>Profesores</h2>
         <p className="text-secondary">Crea y gestiona los profesores</p>
       </div>
-      <hr />
+      <hr className="mx-4" />
       <div className="d-flex justify-content-end m-4">
         <button
           className="btn btn-primary mt-3 mb-3"
@@ -150,6 +150,7 @@ function TeachersPage() {
             onClick={() => handleTeacherClick(teacher._id)}
             isSelected={selectedTeacherId === teacher._id}
           />
+          <hr className="mx-4" />
         </div>
       ))}
 
@@ -158,7 +159,7 @@ function TeachersPage() {
         subjects[selectedTeacherId].length > 0 && (
           <HoursCalculator teachingHours={teachingHours} />
         )}
-
+      <hr className="mx-4" />
       {selectedTeacherId && (
         <div>
           <div className="d-flex justify-content-end m-4">
@@ -227,7 +228,7 @@ function TeachersPage() {
               </tbody>
             </table>
           ) : (
-            <div className="d-flex flex-column align-items-center mb-5">
+            <div className="d-flex flex-column align-items-center pb-5">
               <p>No hay asignaturas asignadas a este profesor</p>
             </div>
           )}

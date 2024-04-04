@@ -22,8 +22,8 @@ function TeacherCard({ teacher, onClick, isSelected }: Props) {
 
   return (
     <div
-      className={`d-flex flex-row align-items-center justify-content-between ${
-        isSelected ? "bg-light" : ""
+      className={`px-4 d-flex flex-row align-items-center justify-content-between ${
+        isSelected ? "bg-white mx-4 rounded border" : ""
       }`}
       onClick={onClick}
       style={{ cursor: "pointer" }}
