@@ -11,6 +11,7 @@ import {
 } from "../../services/SubjectService";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import AddTeacherForm from "../../components/AddTeacherForm/AddTeacherForm";
+import EditSubjectForm from "../../components/EditSubjectForm/EditSubjectForm";
 import { Modal } from "react-bootstrap";
 
 function TeachersPage() {
@@ -19,6 +20,10 @@ function TeachersPage() {
   const [selectedTeacherId, setSelectedTeacherId] = useState<string | null>(
     null
   );
+  const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
+    null
+  );
+  const [showEditSubjectModal, setShowEditSubjectModal] = useState(false);
   const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [teachingHours, setTeachingHours] = useState<number>(0);
@@ -60,6 +65,16 @@ function TeachersPage() {
     } catch (error) {
       console.error("Error fetching subjects:", error);
     }
+  };
+
+  const handleShowEditSubjectModal = (subjectId: string) => {
+    setSelectedSubjectId(subjectId);
+    setShowEditSubjectModal(true);
+  };
+
+  const handleCloseEditSubjectModal = () => {
+    setSelectedSubjectId(null);
+    setShowEditSubjectModal(false);
   };
 
   const handleShowConfirmationModal = (subject: Subject) => {
@@ -165,8 +180,9 @@ function TeachersPage() {
                         Ver
                       </Link>
                       <Link
-                        to={`/editar-asignatura/${subject._id}`}
+                        to="#"
                         className="px-2"
+                        onClick={() => handleShowEditSubjectModal(subject._id)}
                       >
                         Editar
                       </Link>
@@ -212,6 +228,14 @@ function TeachersPage() {
             </button>
           </Modal.Footer>
         </Modal>
+      )}
+
+      {selectedSubjectId && (
+        <EditSubjectForm
+          show={showEditSubjectModal}
+          onHide={handleCloseEditSubjectModal}
+          subjectId={selectedSubjectId}
+        />
       )}
     </div>
   );
