@@ -11,6 +11,7 @@ import {
 } from "../../services/SubjectService";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import AddTeacherForm from "../../components/AddTeacherForm/AddTeacherForm";
+import { Modal } from "react-bootstrap";
 
 function TeachersPage() {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
@@ -19,6 +20,7 @@ function TeachersPage() {
     null
   );
   const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [teachingHours, setTeachingHours] = useState<number>(0);
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);
@@ -60,8 +62,13 @@ function TeachersPage() {
     }
   };
 
-  const handleDelete = (subject: Subject) => {
+  const handleShowConfirmationModal = (subject: Subject) => {
     setSubjectToDelete(subject);
+    setShowConfirmationModal(true);
+  };
+
+  const handleCloseConfirmationModal = () => {
+    setShowConfirmationModal(false);
   };
 
   const confirmDelete = async () => {
@@ -83,6 +90,8 @@ function TeachersPage() {
     } catch (error) {
       console.error("Error deleting subject:", error);
       alert("Se produjo un error al eliminar la asignatura");
+    } finally {
+      setShowConfirmationModal(false);
     }
   };
 
@@ -91,13 +100,13 @@ function TeachersPage() {
       <h1>Profesores</h1>
       <h2>Crea y gestiona profesores</h2>
 
-      <Link
-        to="#"
+      <button
         className="btn btn-primary mt-3 mb-3"
         onClick={handleShowModal}
+        disabled={selectedTeacherId !== null}
       >
         + Añadir Profesor
-      </Link>
+      </button>
       <AddTeacherForm show={showModal} onHide={handleCloseModal} />
       {teachers.map((teacher) => (
         <div key={teacher._id}>
@@ -117,13 +126,12 @@ function TeachersPage() {
 
       {selectedTeacherId && (
         <div>
-          <Link
-            to="#"
+          <button
             className="btn btn-primary mt-3 mb-3"
             onClick={handleShowModal}
           >
             + Añadir Asignatura
-          </Link>
+          </button>
           <AddSubjectForm
             show={showModal}
             onHide={handleCloseModal}
@@ -153,13 +161,22 @@ function TeachersPage() {
                     <td>{subject.hours}</td>
                     <td>{subject.espacio}</td>
                     <td>
-                      <button>Ver</button>
-                      <Link to={`/editar-asignatura/${subject._id}`}>
+                      <Link to="#" className="px-2">
+                        Ver
+                      </Link>
+                      <Link
+                        to={`/editar-asignatura/${subject._id}`}
+                        className="px-2"
+                      >
                         Editar
                       </Link>
-                      <button onClick={() => handleDelete(subject)}>
+                      <Link
+                        to="#"
+                        onClick={() => handleShowConfirmationModal(subject)}
+                        className="px-2"
+                      >
                         Eliminar
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                 ))}
@@ -172,14 +189,29 @@ function TeachersPage() {
       )}
 
       {subjectToDelete && (
-        <div className="delete-confirmation">
-          <p>
+        <Modal
+          show={showConfirmationModal}
+          onHide={handleCloseConfirmationModal}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmación</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             ¿Estás seguro de que deseas eliminar la asignatura{" "}
             {subjectToDelete.name}?
-          </p>
-          <button onClick={confirmDelete}>Eliminar</button>
-          <button onClick={() => setSubjectToDelete(null)}>Cancelar</button>
-        </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-danger" onClick={confirmDelete}>
+              Eliminar
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={handleCloseConfirmationModal}
+            >
+              Cancelar
+            </button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );
