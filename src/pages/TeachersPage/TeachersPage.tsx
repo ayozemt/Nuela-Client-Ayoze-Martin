@@ -124,8 +124,11 @@ function TeachersPage() {
 
   return (
     <div>
-      <h1>Profesores</h1>
-      <h2>Crea y gestiona profesores</h2>
+      <div className="mx-5 mt-4">
+        <h2>Profesores</h2>
+        <p className="text-secondary">Crea y gestiona los profesores</p>
+      </div>
+      <hr />
       <div className="d-flex justify-content-end m-4">
         <button
           className="btn btn-primary mt-3 mb-3"
@@ -224,7 +227,9 @@ function TeachersPage() {
               </tbody>
             </table>
           ) : (
-            <p>No hay asignaturas asignadas a este profesor</p>
+            <div className="d-flex flex-column align-items-center mb-5">
+              <p>No hay asignaturas asignadas a este profesor</p>
+            </div>
           )}
         </div>
       )}
