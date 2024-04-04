@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./TeacherCard.css";
 import Teacher from "../../interfaces/Teacher";
 import { Link } from "react-router-dom";
