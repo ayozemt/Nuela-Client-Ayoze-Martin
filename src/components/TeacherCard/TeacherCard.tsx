@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./TeacherCard.css";
 import Teacher from "../../interfaces/Teacher";
+import { Link } from "react-router-dom";
+import EditTeacherForm from "../EditTeacherForm/EditTeacherForm";
 
 interface Props {
   teacher: Teacher;
@@ -9,6 +11,16 @@ interface Props {
 }
 
 function TeacherCard({ teacher, onClick, isSelected }: Props) {
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const handleShowEditModal = () => {
+    setShowEditModal(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
+  };
+
   return (
     <div className={`cardo ${isSelected ? "selected" : ""}`} onClick={onClick}>
       <img src={teacher.photo} alt="Teacher" style={{ height: "100px" }} />
@@ -18,7 +30,14 @@ function TeacherCard({ teacher, onClick, isSelected }: Props) {
         <p>{teacher.telephone}</p>
       </div>
       <div>
-        <a href={`/editar-profesor/${teacher._id}`}>Editar</a>
+        <Link to="#" onClick={() => handleShowEditModal()}>
+          Editar
+        </Link>
+        <EditTeacherForm
+          show={showEditModal}
+          onHide={handleCloseEditModal}
+          teacherId={teacher._id}
+        />
       </div>
     </div>
   );

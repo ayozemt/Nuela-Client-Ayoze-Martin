@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { getTeacherDetail, updateTeacher } from "../../services/TeacherService";
 import Teacher from "../../interfaces/Teacher";
+import { Modal } from "react-bootstrap";
 
-function EditTeacherForm() {
-  const { teacherId } = useParams<{ teacherId: string }>();
+interface EditTeacherFormProps {
+  show: boolean;
+  onHide: () => void;
+  teacherId: string;
+}
+
+function EditTeacherForm({ show, onHide, teacherId }: EditTeacherFormProps) {
+  // const { teacherId } = useParams<{ teacherId: string }>();
   const [teacher, setTeacher] = useState<Teacher>({
     _id: "",
     name: "",
@@ -43,6 +50,7 @@ function EditTeacherForm() {
     try {
       await updateTeacher(teacherId, teacher);
       alert("Profesor actualizado correctamente");
+      onHide();
     } catch (error) {
       alert("Se produjo un error al actualizar el profesor");
       console.error(error);
@@ -50,54 +58,70 @@ function EditTeacherForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Nombre:
-        <input
-          type="text"
-          name="name"
-          value={teacher.name}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Email:
-        <input
-          type="email"
-          name="email"
-          value={teacher.email}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Teléfono:
-        <input
-          type="tel"
-          name="telephone"
-          value={teacher.telephone}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Foto URL:
-        <input
-          type="text"
-          name="photo"
-          value={teacher.photo}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <button type="submit" className="btn btn-primary">
-        Actualizar Profesor
-      </button>
-      <a className="btn btn-danger" href="/" role="button">
-        Cancelar
-      </a>
-    </form>
+    <Modal show={show} onHide={onHide}>
+      <Modal.Header closeButton>
+        <Modal.Title>Editar profesor</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form onSubmit={handleSubmit} className="mt-4 mb-4">
+          <div className="mb-3 px-5">
+            <label htmlFor="name" className="form-label">
+              Nombre:
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={teacher.name}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
+          <div className="mb-3 px-5">
+            <label htmlFor="email" className="form-label">
+              Email:
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={teacher.email}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
+          <div className="mb-3 px-5">
+            <label htmlFor="telephone" className="form-label">
+              Teléfono:
+            </label>
+            <input
+              type="tel"
+              name="telephone"
+              value={teacher.telephone}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
+          <div className="mb-3 px-5">
+            <label htmlFor="photo" className="form-label">
+              Foto URL:
+            </label>
+            <input
+              type="text"
+              name="photo"
+              value={teacher.photo}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary mt-2">
+            Actualizar Profesor
+          </button>
+        </form>
+      </Modal.Body>
+    </Modal>
   );
 }
 
