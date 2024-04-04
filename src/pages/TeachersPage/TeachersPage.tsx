@@ -12,6 +12,7 @@ import {
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import AddTeacherForm from "../../components/AddTeacherForm/AddTeacherForm";
 import EditSubjectForm from "../../components/EditSubjectForm/EditSubjectForm";
+import SubjectDetailModal from "../../components/SubjectDetailModal/SubjectDetailModal";
 import { Modal } from "react-bootstrap";
 
 function TeachersPage() {
@@ -23,6 +24,7 @@ function TeachersPage() {
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
     null
   );
+  const [showSubjectDetailModal, setShowSubjectDetailModal] = useState(false);
   const [showEditSubjectModal, setShowEditSubjectModal] = useState(false);
   const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -65,6 +67,16 @@ function TeachersPage() {
     } catch (error) {
       console.error("Error fetching subjects:", error);
     }
+  };
+
+  const handleShowSubjectDetailModal = (subjectId: string) => {
+    setSelectedSubjectId(subjectId);
+    setShowSubjectDetailModal(true);
+  };
+
+  const handleCloseSubjectDetailModal = () => {
+    setSelectedSubjectId(null);
+    setShowSubjectDetailModal(false);
   };
 
   const handleShowEditSubjectModal = (subjectId: string) => {
@@ -179,7 +191,13 @@ function TeachersPage() {
                     <td>{subject.hours}</td>
                     <td>{subject.espacio}</td>
                     <td>
-                      <Link to="#" className="px-2">
+                      <Link
+                        to="#"
+                        className="px-2"
+                        onClick={() =>
+                          handleShowSubjectDetailModal(subject._id)
+                        }
+                      >
                         Ver
                       </Link>
                       <Link
@@ -234,11 +252,18 @@ function TeachersPage() {
       )}
 
       {selectedSubjectId && (
-        <EditSubjectForm
-          show={showEditSubjectModal}
-          onHide={handleCloseEditSubjectModal}
-          subjectId={selectedSubjectId}
-        />
+        <>
+          <EditSubjectForm
+            show={showEditSubjectModal}
+            onHide={handleCloseEditSubjectModal}
+            subjectId={selectedSubjectId}
+          />
+          <SubjectDetailModal
+            show={showSubjectDetailModal}
+            onHide={handleCloseSubjectDetailModal}
+            subjectId={selectedSubjectId}
+          />
+        </>
       )}
     </div>
   );
