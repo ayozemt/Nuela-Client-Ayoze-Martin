@@ -135,7 +135,11 @@ function TeachersPage() {
           + Añadir Profesor
         </button>
       </div>
-      <AddTeacherForm show={showModal} onHide={handleCloseModal} />
+      <AddTeacherForm
+        show={showModal}
+        onHide={handleCloseModal}
+        fetchTeachers={fetchTeachers}
+      />
       {teachers.map((teacher) => (
         <div key={teacher._id}>
           <TeacherCard

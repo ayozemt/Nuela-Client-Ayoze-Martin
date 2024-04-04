@@ -6,9 +6,10 @@ import { Modal } from "react-bootstrap";
 interface AddTeacherFormProps {
   show: boolean;
   onHide: () => void;
+  fetchTeachers: () => Promise<void>;
 }
 
-function AddTeacherForm({ show, onHide }: AddTeacherFormProps) {
+function AddTeacherForm({ show, onHide, fetchTeachers }: AddTeacherFormProps) {
   const [teacherData, setTeacherData] = useState<Teacher>({
     _id: "",
     name: "",
@@ -38,6 +39,7 @@ function AddTeacherForm({ show, onHide }: AddTeacherFormProps) {
         photo: "",
       });
       alert("Profesor añadido correctamente");
+      fetchTeachers();
       onHide();
     } catch (error) {
       alert("Se produjo un error al agregar al profesor");
