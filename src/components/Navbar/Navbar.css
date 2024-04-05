@@ -1,0 +1,8 @@
+.nav-link:hover {
+  background-color: lightgrey;
+  border-radius: 10px;
+}
+
+.nav-link {
+  border-radius: 10px;
+}
