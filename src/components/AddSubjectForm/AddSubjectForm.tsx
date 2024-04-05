@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { useParams } from "react-router-dom";
 import { createSubject } from "../../services/SubjectService";
 import Subject from "../../interfaces/Subject";
 import { Modal } from "react-bootstrap";
@@ -8,10 +7,17 @@ interface AddSubjectFormProps {
   show: boolean;
   onHide: () => void;
   teacherId: string;
+  setSubjects: React.Dispatch<
+    React.SetStateAction<{ [key: string]: Subject[] }>
+  >;
 }
 
-function AddSubjectForm({ show, onHide, teacherId }: AddSubjectFormProps) {
-  // const { teacherId } = useParams<{ teacherId: string }>();
+function AddSubjectForm({
+  show,
+  onHide,
+  teacherId,
+  setSubjects,
+}: AddSubjectFormProps) {
   const [subjectData, setSubjectData] = useState<Subject>({
     _id: "",
     name: "",
@@ -36,7 +42,11 @@ function AddSubjectForm({ show, onHide, teacherId }: AddSubjectFormProps) {
     e.preventDefault();
     try {
       if (teacherId) {
-        await createSubject(subjectData, teacherId);
+        const newSubject = await createSubject(subjectData, teacherId);
+        setSubjects((prevSubjects) => ({
+          ...prevSubjects,
+          [teacherId]: [...(prevSubjects[teacherId] || []), newSubject],
+        }));
         setSubjectData({
           _id: "",
           name: "",

@@ -145,6 +145,13 @@ function TeachersPage() {
           onHide={handleCloseModal}
           fetchTeachers={fetchTeachers}
         />
+
+        {teachers.length === 0 && (
+          <div className="d-flex justify-content-center mt-3">
+            <p>Añada un profesor para empezar</p>
+          </div>
+        )}
+
         <div className="teacher-list-container">
           {teachers.map((teacher) => (
             <div key={teacher._id}>
@@ -178,6 +185,7 @@ function TeachersPage() {
               show={showModal}
               onHide={handleCloseModal}
               teacherId={selectedTeacherId || ""}
+              setSubjects={setSubjects}
             />
             {subjects[selectedTeacherId] &&
             subjects[selectedTeacherId].length > 0 ? (
@@ -275,6 +283,7 @@ function TeachersPage() {
               show={showEditSubjectModal}
               onHide={handleCloseEditSubjectModal}
               subjectId={selectedSubjectId}
+              setSubjects={setSubjects}
             />
             <SubjectDetailModal
               show={showSubjectDetailModal}

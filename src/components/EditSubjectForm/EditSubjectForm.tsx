@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom";
 import { getSubjectDetail, updateSubject } from "../../services/SubjectService";
 import Subject from "../../interfaces/Subject";
 import { Modal } from "react-bootstrap";
@@ -8,10 +7,17 @@ interface EditSubjectFormProps {
   show: boolean;
   onHide: () => void;
   subjectId: string;
+  setSubjects: React.Dispatch<
+    React.SetStateAction<{ [key: string]: Subject[] }>
+  >;
 }
 
-function EditSubjectForm({ show, onHide, subjectId }: EditSubjectFormProps) {
-  // const { subjectId } = useParams<{ subjectId: string }>();
+function EditSubjectForm({
+  show,
+  onHide,
+  subjectId,
+  setSubjects,
+}: EditSubjectFormProps) {
   const [subject, setSubject] = useState<Subject>({
     _id: "",
     name: "",
@@ -60,6 +66,21 @@ function EditSubjectForm({ show, onHide, subjectId }: EditSubjectFormProps) {
       await updateSubject(subjectId, updatedSubject);
       alert("Asignatura actualizada correctamente");
       onHide();
+      if (subject.teacher !== undefined) {
+        setSubjects((prevSubjects) => {
+          const updatedSubjects = { ...prevSubjects };
+          const teacherId = subject.teacher as string; // Utilizar una conversión de tipo para asegurar que subject.teacher sea string
+          if (updatedSubjects.hasOwnProperty(teacherId)) {
+            const index = updatedSubjects[teacherId].findIndex(
+              (subj) => subj._id === subjectId
+            );
+            if (index !== -1) {
+              updatedSubjects[teacherId][index] = updatedSubject;
+            }
+          }
+          return updatedSubjects;
+        });
+      }
     } catch (error) {
       alert("Se produjo un error al actualizar la asignatura");
       console.error(error);
