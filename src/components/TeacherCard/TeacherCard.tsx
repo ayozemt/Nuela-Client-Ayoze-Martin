@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import Teacher from "../../interfaces/Teacher";
 import { Link } from "react-router-dom";
 import EditTeacherForm from "../EditTeacherForm/EditTeacherForm";
+import { updateTeacher } from "../../services/TeacherService";
 
 interface Props {
   teacher: Teacher;
   onClick: () => void;
   isSelected: boolean;
+  setTeachers: Dispatch<SetStateAction<Teacher[]>>;
 }
 
-function TeacherCard({ teacher, onClick, isSelected }: Props) {
+function TeacherCard({ teacher, onClick, isSelected, setTeachers }: Props) {
   const [showEditModal, setShowEditModal] = useState(false);
 
   const handleShowEditModal = () => {
@@ -18,6 +20,21 @@ function TeacherCard({ teacher, onClick, isSelected }: Props) {
 
   const handleCloseEditModal = () => {
     setShowEditModal(false);
+  };
+
+  const handleSubmit = async (updatedTeacher: Teacher) => {
+    try {
+      await updateTeacher(teacher._id, updatedTeacher);
+      setTeachers((prevTeachers: Teacher[]) =>
+        prevTeachers.map((t: Teacher) =>
+          t._id === teacher._id ? updatedTeacher : t
+        )
+      );
+      handleCloseEditModal();
+    } catch (error) {
+      console.error("Error updating teacher:", error);
+      alert("Error al actualizar el profesor");
+    }
   };
 
   return (
@@ -59,6 +76,7 @@ function TeacherCard({ teacher, onClick, isSelected }: Props) {
           show={showEditModal}
           onHide={handleCloseEditModal}
           teacherId={teacher._id}
+          handleSubmit={handleSubmit}
         />
       </div>
     </div>

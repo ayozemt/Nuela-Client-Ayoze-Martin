@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom";
 import { getTeacherDetail, updateTeacher } from "../../services/TeacherService";
 import Teacher from "../../interfaces/Teacher";
 import { Modal } from "react-bootstrap";
@@ -8,10 +7,15 @@ interface EditTeacherFormProps {
   show: boolean;
   onHide: () => void;
   teacherId: string;
+  handleSubmit: (updatedTeacher: Teacher) => void;
 }
 
-function EditTeacherForm({ show, onHide, teacherId }: EditTeacherFormProps) {
-  // const { teacherId } = useParams<{ teacherId: string }>();
+function EditTeacherForm({
+  show,
+  onHide,
+  teacherId,
+  handleSubmit,
+}: EditTeacherFormProps) {
   const [teacher, setTeacher] = useState<Teacher>({
     _id: "",
     name: "",
@@ -41,7 +45,7 @@ function EditTeacherForm({ show, onHide, teacherId }: EditTeacherFormProps) {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!teacherId) {
       alert("No se pudo obtener el ID del profesor");
@@ -49,11 +53,12 @@ function EditTeacherForm({ show, onHide, teacherId }: EditTeacherFormProps) {
     }
     try {
       await updateTeacher(teacherId, teacher);
+      handleSubmit(teacher);
       alert("Profesor actualizado correctamente");
       onHide();
     } catch (error) {
-      alert("Se produjo un error al actualizar el profesor");
-      console.error(error);
+      console.error("Error updating teacher:", error);
+      alert("Error al actualizar el profesor");
     }
   };
 
@@ -63,7 +68,7 @@ function EditTeacherForm({ show, onHide, teacherId }: EditTeacherFormProps) {
         <Modal.Title>Editar profesor</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form onSubmit={handleSubmit} className="mt-4 mb-4">
+        <form onSubmit={handleFormSubmit} className="mt-4 mb-4">
           <div className="mb-3 px-4">
             <label htmlFor="name" className="form-label">
               Nombre:

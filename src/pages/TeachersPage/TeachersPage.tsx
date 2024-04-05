@@ -159,6 +159,7 @@ function TeachersPage() {
                 teacher={teacher}
                 onClick={() => handleTeacherClick(teacher._id)}
                 isSelected={selectedTeacherId === teacher._id}
+                setTeachers={setTeachers}
               />
               <hr className="mx-4" />
             </div>
