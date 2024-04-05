@@ -166,11 +166,13 @@ function TeachersPage() {
           ))}
         </div>
 
-        {selectedTeacherId &&
-          subjects[selectedTeacherId] &&
-          subjects[selectedTeacherId].length > 0 && (
-            <HoursCalculator teachingHours={teachingHours} />
-          )}
+        {selectedTeacherId ? (
+          <HoursCalculator teachingHours={teachingHours} />
+        ) : (
+          <div className="d-flex justify-content-center m-4">
+            <p>Haz clic en un profesor para ver su detalle</p>
+          </div>
+        )}
         <hr className="mx-4" />
         {selectedTeacherId && (
           <div>
