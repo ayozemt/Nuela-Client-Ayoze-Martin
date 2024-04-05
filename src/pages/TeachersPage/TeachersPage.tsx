@@ -40,7 +40,6 @@ function TeachersPage() {
 
   useEffect(() => {
     if (selectedTeacherId && subjects[selectedTeacherId]) {
-      // Calcula las horas totales cuando cambia el profesor seleccionado o las asignaturas del profesor seleccionado
       let total = 0;
       subjects[selectedTeacherId].forEach((subject) => {
         total += subject.hours;
@@ -85,9 +84,24 @@ function TeachersPage() {
     setShowEditSubjectModal(true);
   };
 
-  const handleCloseEditSubjectModal = () => {
-    setSelectedSubjectId(null);
-    setShowEditSubjectModal(false);
+  const handleCloseEditSubjectModal = async () => {
+    try {
+      setSelectedSubjectId(null);
+      setShowEditSubjectModal(false);
+
+      if (selectedTeacherId) {
+        const fetchedSubjects = await getSubjectsByTeacher(selectedTeacherId);
+        setSubjects({ ...subjects, [selectedTeacherId]: fetchedSubjects });
+
+        let total = 0;
+        fetchedSubjects.forEach((subject) => {
+          total += subject.hours;
+        });
+        setTeachingHours(total);
+      }
+    } catch (error) {
+      console.error("Error fetching subjects:", error);
+    }
   };
 
   const handleShowConfirmationModal = (subject: Subject) => {
