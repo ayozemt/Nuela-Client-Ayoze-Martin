@@ -27,6 +27,7 @@ function TeacherCard({ teacher, onClick, isSelected }: Props) {
       }`}
       onClick={onClick}
       style={{ cursor: "pointer", lineHeight: "200%" }}
+      title="Click para ver detalle de profesor"
     >
       <div className="d-flex flex-row mx-2">
         <img

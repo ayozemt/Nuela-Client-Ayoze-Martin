@@ -124,159 +124,166 @@ function TeachersPage() {
   };
 
   return (
-    <div className="bg-light">
-      <div className="mx-5 pt-4">
-        <h2>Profesores</h2>
-        <p className="text-secondary">Crea y gestiona los profesores</p>
-      </div>
-      <hr className="mx-4" />
-      <div className="d-flex justify-content-end m-4">
-        <button
-          className="btn btn-primary"
-          onClick={handleShowModal}
-          disabled={selectedTeacherId !== null}
-        >
-          + Añadir Profesor
-        </button>
-      </div>
-      <AddTeacherForm
-        show={showModal}
-        onHide={handleCloseModal}
-        fetchTeachers={fetchTeachers}
-      />
-      {teachers.map((teacher) => (
-        <div key={teacher._id}>
-          <TeacherCard
-            teacher={teacher}
-            onClick={() => handleTeacherClick(teacher._id)}
-            isSelected={selectedTeacherId === teacher._id}
-          />
-          <hr className="mx-4" />
+    <div className="page-container bg-light">
+      <div className="bg-light">
+        <div className="mx-5 pt-4">
+          <h2>Profesores</h2>
+          <p className="text-secondary">Crea y gestiona los profesores</p>
         </div>
-      ))}
+        <hr className="mx-4" />
+        <div className="d-flex justify-content-end m-4">
+          <button
+            className="btn btn-primary"
+            onClick={handleShowModal}
+            disabled={selectedTeacherId !== null}
+          >
+            + Añadir Profesor
+          </button>
+        </div>
+        <AddTeacherForm
+          show={showModal}
+          onHide={handleCloseModal}
+          fetchTeachers={fetchTeachers}
+        />
+        <div className="teacher-list-container">
+          {teachers.map((teacher) => (
+            <div key={teacher._id}>
+              <TeacherCard
+                teacher={teacher}
+                onClick={() => handleTeacherClick(teacher._id)}
+                isSelected={selectedTeacherId === teacher._id}
+              />
+              <hr className="mx-4" />
+            </div>
+          ))}
+        </div>
 
-      {selectedTeacherId &&
-        subjects[selectedTeacherId] &&
-        subjects[selectedTeacherId].length > 0 && (
-          <HoursCalculator teachingHours={teachingHours} />
-        )}
-      <hr className="mx-4" />
-      {selectedTeacherId && (
-        <div>
-          <div className="d-flex justify-content-end m-4">
-            <button className="btn btn-primary mt-3" onClick={handleShowModal}>
-              + Añadir Asignatura
-            </button>
-          </div>
-          <AddSubjectForm
-            show={showModal}
-            onHide={handleCloseModal}
-            teacherId={selectedTeacherId || ""}
-          />
-          {subjects[selectedTeacherId] &&
-          subjects[selectedTeacherId].length > 0 ? (
-            <div className="d-flex flex-column align-items-center">
-              <table className="table custom-table">
-                <thead>
-                  <tr>
-                    <th className="text-secondary">Nombre</th>
-                    <th className="text-secondary">Tipo</th>
-                    <th className="text-secondary">Curso</th>
-                    <th className="text-secondary">Grupo</th>
-                    <th className="text-secondary">Horas semana</th>
-                    <th className="text-secondary">Espacio regular</th>
-                    <th className="text-secondary">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {subjects[selectedTeacherId].map((subject: Subject) => (
-                    <tr key={subject._id}>
-                      <td className="text-secondary">{subject.name}</td>
-                      <td className="text-secondary">{subject.type}</td>
-                      <td className="text-secondary">{subject.grade}</td>
-                      <td className="text-secondary">{subject.group}</td>
-                      <td className="text-secondary">{subject.hours} h</td>
-                      <td className="text-secondary">{subject.espacio}</td>
-                      <td>
-                        <Link
-                          to="#"
-                          className="px-2"
-                          onClick={() =>
-                            handleShowSubjectDetailModal(subject._id)
-                          }
-                        >
-                          Ver
-                        </Link>
-                        <Link
-                          to="#"
-                          className="px-2"
-                          onClick={() =>
-                            handleShowEditSubjectModal(subject._id)
-                          }
-                        >
-                          Editar
-                        </Link>
-                        <Link
-                          to="#"
-                          onClick={() => handleShowConfirmationModal(subject)}
-                          className="px-2 text-danger"
-                        >
-                          Eliminar
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="d-flex flex-column align-items-center pb-5">
-              <p>No hay asignaturas asignadas a este profesor</p>
-            </div>
+        {selectedTeacherId &&
+          subjects[selectedTeacherId] &&
+          subjects[selectedTeacherId].length > 0 && (
+            <HoursCalculator teachingHours={teachingHours} />
           )}
-        </div>
-      )}
+        <hr className="mx-4" />
+        {selectedTeacherId && (
+          <div>
+            <div className="d-flex justify-content-end m-4">
+              <button
+                className="btn btn-primary mt-3"
+                onClick={handleShowModal}
+              >
+                + Añadir Asignatura
+              </button>
+            </div>
+            <AddSubjectForm
+              show={showModal}
+              onHide={handleCloseModal}
+              teacherId={selectedTeacherId || ""}
+            />
+            {subjects[selectedTeacherId] &&
+            subjects[selectedTeacherId].length > 0 ? (
+              <div className="d-flex flex-column align-items-center">
+                <table className="table custom-table">
+                  <thead>
+                    <tr>
+                      <th className="text-secondary">Nombre</th>
+                      <th className="text-secondary">Tipo</th>
+                      <th className="text-secondary">Curso</th>
+                      <th className="text-secondary">Grupo</th>
+                      <th className="text-secondary">Horas semana</th>
+                      <th className="text-secondary">Espacio regular</th>
+                      <th className="text-secondary">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {subjects[selectedTeacherId].map((subject: Subject) => (
+                      <tr key={subject._id}>
+                        <td className="text-secondary">{subject.name}</td>
+                        <td className="text-secondary">{subject.type}</td>
+                        <td className="text-secondary">{subject.grade}</td>
+                        <td className="text-secondary">{subject.group}</td>
+                        <td className="text-secondary">{subject.hours} h</td>
+                        <td className="text-secondary">{subject.espacio}</td>
+                        <td>
+                          <Link
+                            to="#"
+                            className="px-2"
+                            onClick={() =>
+                              handleShowSubjectDetailModal(subject._id)
+                            }
+                          >
+                            Ver
+                          </Link>
+                          <Link
+                            to="#"
+                            className="px-2"
+                            onClick={() =>
+                              handleShowEditSubjectModal(subject._id)
+                            }
+                          >
+                            Editar
+                          </Link>
+                          <Link
+                            to="#"
+                            onClick={() => handleShowConfirmationModal(subject)}
+                            className="px-2 text-danger"
+                          >
+                            Eliminar
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="d-flex flex-column align-items-center pb-5">
+                <p>No hay asignaturas asignadas a este profesor</p>
+              </div>
+            )}
+          </div>
+        )}
 
-      {subjectToDelete && (
-        <Modal
-          show={showConfirmationModal}
-          onHide={handleCloseConfirmationModal}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Confirmación</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            ¿Estás seguro de que deseas eliminar la asignatura{" "}
-            {subjectToDelete.name}?
-          </Modal.Body>
-          <Modal.Footer>
-            <button className="btn btn-danger" onClick={confirmDelete}>
-              Eliminar
-            </button>
-            <button
-              className="btn btn-secondary"
-              onClick={handleCloseConfirmationModal}
-            >
-              Cancelar
-            </button>
-          </Modal.Footer>
-        </Modal>
-      )}
+        {subjectToDelete && (
+          <Modal
+            show={showConfirmationModal}
+            onHide={handleCloseConfirmationModal}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Confirmación</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              ¿Estás seguro de que deseas eliminar la asignatura{" "}
+              {subjectToDelete.name}?
+            </Modal.Body>
+            <Modal.Footer>
+              <button className="btn btn-danger" onClick={confirmDelete}>
+                Eliminar
+              </button>
+              <button
+                className="btn btn-secondary"
+                onClick={handleCloseConfirmationModal}
+              >
+                Cancelar
+              </button>
+            </Modal.Footer>
+          </Modal>
+        )}
 
-      {selectedSubjectId && (
-        <>
-          <EditSubjectForm
-            show={showEditSubjectModal}
-            onHide={handleCloseEditSubjectModal}
-            subjectId={selectedSubjectId}
-          />
-          <SubjectDetailModal
-            show={showSubjectDetailModal}
-            onHide={handleCloseSubjectDetailModal}
-            subjectId={selectedSubjectId}
-          />
-        </>
-      )}
+        {selectedSubjectId && (
+          <>
+            <EditSubjectForm
+              show={showEditSubjectModal}
+              onHide={handleCloseEditSubjectModal}
+              subjectId={selectedSubjectId}
+            />
+            <SubjectDetailModal
+              show={showSubjectDetailModal}
+              onHide={handleCloseSubjectDetailModal}
+              subjectId={selectedSubjectId}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }
