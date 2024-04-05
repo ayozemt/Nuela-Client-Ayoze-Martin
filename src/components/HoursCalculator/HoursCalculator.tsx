@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
+import "./HoursCalculator.css";
 
 function HoursCalculator({ teachingHours }: { teachingHours: number }) {
   const [totalHours, setTotalHours] = useState(0);
@@ -47,20 +48,20 @@ function HoursCalculator({ teachingHours }: { teachingHours: number }) {
           Anual
         </Button>
       </div>
-      <div className="d-flex justify-content-around w-100">
-        <div className="my-5 py-2 px-5 border rounded">
-          <p className="m-1">Horas Totales:</p>
-          <h1 className="m-1">{totalHours}</h1>
+      <div className="d-flex justify-content-center w-100 px-4">
+        <div className="cuadro mx-2 my-5 p-2 rounded bg-white">
+          <p className="horas m-1 text-secondary">Horas Totales:</p>
+          <h2 className="m-1">{totalHours} horas</h2>
         </div>
-        <div className="my-5 py-2 px-5 border rounded">
-          <p className="m-1">Horas Lectivas:</p>
-          <h1 className="m-1">
-            {activeTab === "weekly" ? teachingHours : teachingHours * 37}
-          </h1>
+        <div className="cuadro mx-2 my-5 p-2 rounded bg-white">
+          <p className="horas m-1 text-secondary">Horas Lectivas:</p>
+          <h2 className="m-1">
+            {activeTab === "weekly" ? teachingHours : teachingHours * 37} horas
+          </h2>
         </div>
-        <div className="my-5 py-2 px-5 border rounded">
-          <p className="m-1">Horas Complementarias:</p>{" "}
-          <h1 className="m-1">{extraHours}</h1>
+        <div className="cuadro mx-2 my-5 p-2 rounded bg-white">
+          <p className="horas m-1 text-secondary">Horas Complementarias:</p>
+          <h2 className="m-1">{extraHours} horas</h2>
         </div>
       </div>
     </div>
