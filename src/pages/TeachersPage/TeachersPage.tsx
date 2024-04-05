@@ -1,3 +1,4 @@
+import "./TeachersPage.css";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import TeacherCard from "../../components/TeacherCard/TeacherCard";
@@ -131,7 +132,7 @@ function TeachersPage() {
       <hr className="mx-4" />
       <div className="d-flex justify-content-end m-4">
         <button
-          className="btn btn-primary mt-3 mb-3"
+          className="btn btn-primary"
           onClick={handleShowModal}
           disabled={selectedTeacherId !== null}
         >
@@ -163,10 +164,7 @@ function TeachersPage() {
       {selectedTeacherId && (
         <div>
           <div className="d-flex justify-content-end m-4">
-            <button
-              className="btn btn-primary mt-3 mb-3"
-              onClick={handleShowModal}
-            >
+            <button className="btn btn-primary mt-3" onClick={handleShowModal}>
               + Añadir Asignatura
             </button>
           </div>
@@ -177,56 +175,60 @@ function TeachersPage() {
           />
           {subjects[selectedTeacherId] &&
           subjects[selectedTeacherId].length > 0 ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Curso</th>
-                  <th>Grupo</th>
-                  <th>Horas</th>
-                  <th>Espacio</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {subjects[selectedTeacherId].map((subject: Subject) => (
-                  <tr key={subject._id}>
-                    <td>{subject.name}</td>
-                    <td>{subject.type}</td>
-                    <td>{subject.grade}</td>
-                    <td>{subject.group}</td>
-                    <td>{subject.hours}</td>
-                    <td>{subject.espacio}</td>
-                    <td>
-                      <Link
-                        to="#"
-                        className="px-2"
-                        onClick={() =>
-                          handleShowSubjectDetailModal(subject._id)
-                        }
-                      >
-                        Ver
-                      </Link>
-                      <Link
-                        to="#"
-                        className="px-2"
-                        onClick={() => handleShowEditSubjectModal(subject._id)}
-                      >
-                        Editar
-                      </Link>
-                      <Link
-                        to="#"
-                        onClick={() => handleShowConfirmationModal(subject)}
-                        className="px-2"
-                      >
-                        Eliminar
-                      </Link>
-                    </td>
+            <div className="d-flex flex-column align-items-center">
+              <table className="table custom-table">
+                <thead>
+                  <tr>
+                    <th className="text-secondary">Nombre</th>
+                    <th className="text-secondary">Tipo</th>
+                    <th className="text-secondary">Curso</th>
+                    <th className="text-secondary">Grupo</th>
+                    <th className="text-secondary">Horas semana</th>
+                    <th className="text-secondary">Espacio regular</th>
+                    <th className="text-secondary">Acciones</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {subjects[selectedTeacherId].map((subject: Subject) => (
+                    <tr key={subject._id}>
+                      <td className="text-secondary">{subject.name}</td>
+                      <td className="text-secondary">{subject.type}</td>
+                      <td className="text-secondary">{subject.grade}</td>
+                      <td className="text-secondary">{subject.group}</td>
+                      <td className="text-secondary">{subject.hours} h</td>
+                      <td className="text-secondary">{subject.espacio}</td>
+                      <td>
+                        <Link
+                          to="#"
+                          className="px-2"
+                          onClick={() =>
+                            handleShowSubjectDetailModal(subject._id)
+                          }
+                        >
+                          Ver
+                        </Link>
+                        <Link
+                          to="#"
+                          className="px-2"
+                          onClick={() =>
+                            handleShowEditSubjectModal(subject._id)
+                          }
+                        >
+                          Editar
+                        </Link>
+                        <Link
+                          to="#"
+                          onClick={() => handleShowConfirmationModal(subject)}
+                          className="px-2 text-danger"
+                        >
+                          Eliminar
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <div className="d-flex flex-column align-items-center pb-5">
               <p>No hay asignaturas asignadas a este profesor</p>

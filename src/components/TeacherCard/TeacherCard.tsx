@@ -26,9 +26,9 @@ function TeacherCard({ teacher, onClick, isSelected }: Props) {
         isSelected ? "bg-white mx-4 rounded border" : ""
       }`}
       onClick={onClick}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "pointer", lineHeight: "200%" }}
     >
-      <div className="d-flex flex-row m-2">
+      <div className="d-flex flex-row mx-2">
         <img
           src={teacher.photo}
           alt="Teacher"
@@ -41,7 +41,11 @@ function TeacherCard({ teacher, onClick, isSelected }: Props) {
             {teacher.email}
           </a>
           <br />
-          <a href={`tel:${teacher.telephone}`} className="text-secondary">
+          <a
+            href={`tel:${teacher.telephone}`}
+            className="text-secondary"
+            style={{ textDecoration: "none" }}
+          >
             {teacher.telephone}
           </a>
         </div>
