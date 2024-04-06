@@ -121,6 +121,7 @@ function AddTeacherForm({ show, onHide, fetchTeachers }: AddTeacherFormProps) {
               name="photo"
               value={teacherData.photo}
               onChange={handleChange}
+              placeholder="Si lo deja en blanco se creará un anagrama"
               className="form-control"
             />
           </div>
