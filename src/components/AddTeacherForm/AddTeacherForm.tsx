@@ -36,14 +36,19 @@ function AddTeacherForm({ show, onHide, fetchTeachers }: AddTeacherFormProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (!teacherData.photo) {
-        setTeacherData((prevData) => ({
-          ...prevData,
-          photo: generatePlaceholderImage(prevData.name),
-        }));
-      }
+      const teacherPhotoUrl = teacherData.photo
+        ? teacherData.photo
+        : generatePlaceholderImage(teacherData.name);
 
-      await createTeacher(teacherData);
+      const newTeacher = {
+        _id: teacherData._id,
+        name: teacherData.name,
+        email: teacherData.email,
+        telephone: teacherData.telephone,
+        photo: teacherPhotoUrl,
+      };
+
+      await createTeacher(newTeacher);
 
       setTeacherData({
         _id: "",

@@ -61,5 +61,6 @@ export const deleteTeacher = async (teacherId: string): Promise<void> => {
 
 const handleApiError = (error: any): never => {
   console.error("API error occurred:", error);
+  console.error("API response:", error.response);
   throw new Error("Internal server error");
 };
