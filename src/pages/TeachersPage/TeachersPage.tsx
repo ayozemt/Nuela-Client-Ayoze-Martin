@@ -31,8 +31,13 @@ function TeachersPage() {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [teachingHours, setTeachingHours] = useState<number>(0);
   const [showModal, setShowModal] = useState(false);
+  const [showSubjectModal, setShowSubjectModal] = useState(false);
+
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
+  const handleShowSubjectModal = () => setShowSubjectModal(true);
+  const handleCloseSubjectModal = () => setShowSubjectModal(false);
 
   useEffect(() => {
     fetchTeachers();
@@ -193,14 +198,14 @@ function TeachersPage() {
             <div className="d-flex justify-content-end m-4">
               <button
                 className="btn btn-primary mt-3"
-                onClick={handleShowModal}
+                onClick={handleShowSubjectModal}
               >
                 + Añadir Asignatura
               </button>
             </div>
             <AddSubjectForm
-              show={showModal}
-              onHide={handleCloseModal}
+              show={showSubjectModal}
+              onHide={handleCloseSubjectModal}
               teacherId={selectedTeacherId || ""}
               setSubjects={setSubjects}
             />
