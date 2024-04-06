@@ -40,15 +40,10 @@ function AddTeacherForm({ show, onHide, fetchTeachers }: AddTeacherFormProps) {
         ? teacherData.photo
         : generatePlaceholderImage(teacherData.name);
 
-      const newTeacher = {
-        _id: teacherData._id,
-        name: teacherData.name,
-        email: teacherData.email,
-        telephone: teacherData.telephone,
+      await createTeacher({
+        ...teacherData,
         photo: teacherPhotoUrl,
-      };
-
-      await createTeacher(newTeacher);
+      });
 
       setTeacherData({
         _id: "",
