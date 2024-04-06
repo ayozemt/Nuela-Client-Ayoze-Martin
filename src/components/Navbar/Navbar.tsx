@@ -5,13 +5,20 @@ import "./Navbar.css";
 
 function VerticalNavbar() {
   return (
-    <Navbar bg="white" expand="lg" className="flex-column">
-      <Navbar.Brand className="py-5">
-        <i className="bi bi-building px-2"></i>Tajamar
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar bg="white" expand="lg">
+      <div>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      </div>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="flex-column">
+          <Navbar.Brand className="py-5 d-flex flex-row justify-content-between">
+            <div>
+              <i className="bi bi-building px-2 text-secondary"></i>Tajamar
+            </div>
+            <div>
+              <i className="bi bi-person-circle text-success"></i>
+            </div>
+          </Navbar.Brand>
           <Nav.Item>
             <NavLink className="nav-link" to="/home">
               <i className="bi bi-house-door px-2"></i> Inicio
