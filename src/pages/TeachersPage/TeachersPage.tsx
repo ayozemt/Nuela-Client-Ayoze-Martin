@@ -193,8 +193,21 @@ function TeachersPage() {
           </div>
         )}
         <hr className="mx-4" />
+
         {selectedTeacherId && (
           <div>
+            <ul className="nav nav-tabs m-4">
+              <li className="nav-item">
+                <Link className="nav-link active text-primary" to="#">
+                  Horas lectivas
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link text-secondary" to="#">
+                  Horas complementarias
+                </Link>
+              </li>
+            </ul>
             <div className="d-flex justify-content-end m-4">
               <button
                 className="btn btn-primary mt-3"
